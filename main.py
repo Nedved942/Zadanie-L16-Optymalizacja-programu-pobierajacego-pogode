@@ -4,6 +4,24 @@ from json import dumps, loads, JSONDecodeError
 
 print("*** Obsługa biblioteki zewnętrznej ***")
 
+
+class WeatherForecast:
+    def __init__(self, weather_data):
+        self.weather_data = weather_data
+
+    def __getitem__(self, item):
+        return self.weather_data[item]
+
+    def __setitem__(self, key, value):
+        self.weather_data[key] = value
+
+    def __iter__(self):
+        return iter(self.weather_data.keys())
+
+    def items(self):
+        return ((key, value) for key, value in self.weather_data.items())
+
+
 try:
     with open("history_weather_forecast.json") as file_stream:
         history_weather_forecast = file_stream.read()
@@ -19,6 +37,12 @@ except JSONDecodeError as e:
 
 day_from_user = input("Podaj dzień, dla którego chcesz sprawdzić pogodę (YYYY-mm-dd): ")
 # day_from_user = "2023-10-30"
+
+# weather_forecast = WeatherForecast()
+# print(weather_forecast[date])
+# print(next(weather_forecast.items()))
+# for item in weather_forecast:
+#     print(item)
 
 try:
     day_from_user = date.fromisoformat(day_from_user)
@@ -41,7 +65,6 @@ else:
           f"start_date={searched_date}&end_date={searched_date}"
     data = requests.get(URL)
     data_dict = data.json()
-    # pprint(data_dict)
     try:
         rain_sum = data_dict['daily']['rain_sum'][0]
     except KeyError:
