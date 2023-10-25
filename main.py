@@ -25,7 +25,8 @@ class WeatherForecast:
         with open(path_file, "w") as file_stream:
             file_stream.write(dumps(self.weather_data))
 
-    def request_to_api(self, latitude, longitude, searched_date):
+    @staticmethod
+    def request_to_api(latitude, longitude, searched_date):
         url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude" \
               f"={longitude}&hourly=rain&daily=rain_sum&timezone=Europe%2FLondon&" \
               f"start_date={searched_date}&end_date={searched_date}"
@@ -99,7 +100,7 @@ weather_forecast = WeatherForecast(read_file(path_history_file))
 if searched_date in weather_forecast:
     rain_sum = weather_forecast[searched_date]
 else:
-    rain_sum = weather_forecast.request_to_api(latitude, longitude, searched_date)
+    rain_sum = WeatherForecast.request_to_api(latitude, longitude, searched_date)
     weather_forecast[searched_date] = rain_sum
     weather_forecast.write_file(path_history_file)
 
