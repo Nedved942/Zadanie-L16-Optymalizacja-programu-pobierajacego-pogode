@@ -86,17 +86,6 @@ path_history_file = "history_weather_forecast.json"
 
 weather_forecast = WeatherForecast(read_file(path_history_file))
 
-# print(weather_forecast.weather_data)
-# print(weather_forecast["2023-10-24"])
-# weather_forecast["2023-10-24"] = 13.7
-# print(weather_forecast["2023-10-24"])
-# weather_data_generator = weather_forecast.items()
-# print(next(weather_data_generator))
-# print(next(weather_data_generator))
-#
-# for item in weather_forecast:
-#     print(item)
-
 if searched_date in weather_forecast:
     rain_sum = weather_forecast[searched_date]
 else:
@@ -105,3 +94,15 @@ else:
     weather_forecast.write_file(path_history_file)
 
 is_it_rain(rain_sum)
+
+# Wywołanie metod magicznych
+print(weather_forecast.weather_data)
+print(weather_forecast["2023-10-24"])
+weather_forecast["2023-10-24"] = 13.7
+print(weather_forecast["2023-10-24"])
+weather_data_generator = weather_forecast.items()
+print(next(weather_data_generator))
+print(next(weather_data_generator))
+
+for item in weather_forecast:
+    print(item)
